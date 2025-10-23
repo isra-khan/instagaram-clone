@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:instagram_clone_flutter/providers/user_provider.dart';
-import 'package:instagram_clone_flutter/utils/global_variable.dart';
+import 'package:instagramclone/providers/user_provider.dart';
+import 'package:instagramclone/utils/global_variable.dart';
 import 'package:provider/provider.dart';
 
 class ResponsiveLayout extends StatefulWidget {
@@ -24,19 +24,23 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   }
 
   addData() async {
-    UserProvider userProvider =
-        Provider.of<UserProvider>(context, listen: false);
+    UserProvider userProvider = Provider.of<UserProvider>(
+      context,
+      listen: false,
+    );
     await userProvider.refreshUser();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      if (constraints.maxWidth > webScreenSize) {
-        // 600 can be changed to 900 if you want to display tablet screen with mobile screen layout
-        return widget.webScreenLayout;
-      }
-      return widget.mobileScreenLayout;
-    });
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > webScreenSize) {
+          // 600 can be changed to 900 if you want to display tablet screen with mobile screen layout
+          return widget.webScreenLayout;
+        }
+        return widget.mobileScreenLayout;
+      },
+    );
   }
 }

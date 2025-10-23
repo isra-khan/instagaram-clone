@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone_flutter/models/user.dart';
-import 'package:instagram_clone_flutter/providers/user_provider.dart';
-import 'package:instagram_clone_flutter/resources/firestore_methods.dart';
-import 'package:instagram_clone_flutter/utils/colors.dart';
-import 'package:instagram_clone_flutter/utils/utils.dart';
-import 'package:instagram_clone_flutter/widgets/comment_card.dart';
+import 'package:instagramclone/models/user.dart';
+import 'package:instagramclone/providers/user_provider.dart';
+import 'package:instagramclone/resources/firestore_methods.dart';
+import 'package:instagramclone/utils/colors.dart';
+import 'package:instagramclone/utils/utils.dart';
+import 'package:instagramclone/widgets/comment_card.dart';
 import 'package:provider/provider.dart';
 
 class CommentsScreen extends StatefulWidget {
@@ -37,10 +37,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
         commentEditingController.text = "";
       });
     } catch (err) {
-      showSnackBar(
-        context,
-        err.toString(),
-      );
+      showSnackBar(context, err.toString());
     }
   }
 
@@ -51,9 +48,7 @@ class _CommentsScreenState extends State<CommentsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
-        title: const Text(
-          'Comments',
-        ),
+        title: const Text('Comments'),
         centerTitle: false,
       ),
       body: StreamBuilder(
@@ -62,28 +57,29 @@ class _CommentsScreenState extends State<CommentsScreen> {
             .doc(widget.postId)
             .collection('comments')
             .snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        builder:
+            (
+              context,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+            ) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (ctx, index) => CommentCard(
-              snap: snapshot.data!.docs[index],
-            ),
-          );
-        },
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (ctx, index) =>
+                    CommentCard(snap: snapshot.data!.docs[index]),
+              );
+            },
       ),
       // text input
       bottomNavigationBar: SafeArea(
         child: Container(
           height: kToolbarHeight,
-          margin:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          margin: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           padding: const EdgeInsets.only(left: 16, right: 8),
           child: Row(
             children: [
@@ -104,20 +100,19 @@ class _CommentsScreenState extends State<CommentsScreen> {
                 ),
               ),
               InkWell(
-                onTap: () => postComment(
-                  user.uid,
-                  user.username,
-                  user.photoUrl,
-                ),
+                onTap: () =>
+                    postComment(user.uid, user.username, user.photoUrl),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 8,
+                  ),
                   child: const Text(
                     'Post',
                     style: TextStyle(color: Colors.blue),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

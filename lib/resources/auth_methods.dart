@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:instagram_clone_flutter/models/user.dart' as model;
-import 'package:instagram_clone_flutter/resources/storage_methods.dart';
+import 'package:instagramclone/models/user.dart' as model;
+import 'package:instagramclone/resources/storage_methods.dart';
 
 class AuthMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -12,8 +12,10 @@ class AuthMethods {
   Future<model.User> getUserDetails() async {
     User currentUser = _auth.currentUser!;
 
-    DocumentSnapshot documentSnapshot =
-        await _firestore.collection('users').doc(currentUser.uid).get();
+    DocumentSnapshot documentSnapshot = await _firestore
+        .collection('users')
+        .doc(currentUser.uid)
+        .get();
 
     return model.User.fromSnap(documentSnapshot);
   }
@@ -40,8 +42,11 @@ class AuthMethods {
           password: password,
         );
 
-        String photoUrl =
-            await StorageMethods().uploadImageToStorage('profilePics', file, false);
+        String photoUrl = await StorageMethods().uploadImageToStorage(
+          'profilePics',
+          file,
+          false,
+        );
 
         model.User user = model.User(
           username: username,

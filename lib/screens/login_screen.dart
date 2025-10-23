@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:instagram_clone_flutter/resources/auth_methods.dart';
-import 'package:instagram_clone_flutter/responsive/mobile_screen_layout.dart';
-import 'package:instagram_clone_flutter/responsive/responsive_layout.dart';
-import 'package:instagram_clone_flutter/responsive/web_screen_layout.dart';
-import 'package:instagram_clone_flutter/screens/signup_screen.dart';
-import 'package:instagram_clone_flutter/utils/colors.dart';
-import 'package:instagram_clone_flutter/utils/global_variable.dart';
-import 'package:instagram_clone_flutter/utils/utils.dart';
-import 'package:instagram_clone_flutter/widgets/text_field_input.dart';
+import 'package:instagramclone/resources/auth_methods.dart';
+import 'package:instagramclone/responsive/mobile_screen_layout.dart';
+import 'package:instagramclone/responsive/responsive_layout.dart';
+import 'package:instagramclone/responsive/web_screen_layout.dart';
+import 'package:instagramclone/screens/signup_screen.dart';
+import 'package:instagramclone/utils/colors.dart';
+import 'package:instagramclone/utils/global_variable.dart';
+import 'package:instagramclone/utils/utils.dart';
+import 'package:instagramclone/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -34,17 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = true;
     });
     String res = await AuthMethods().loginUser(
-        email: _emailController.text, password: _passwordController.text);
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
     if (res == 'success') {
       if (context.mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-              builder: (context) => const ResponsiveLayout(
-                mobileScreenLayout: MobileScreenLayout(),
-                webScreenLayout: WebScreenLayout(),
-              ),
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
             ),
-            (route) => false);
+          ),
+          (route) => false,
+        );
 
         setState(() {
           _isLoading = false;
@@ -68,41 +71,33 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           padding: MediaQuery.of(context).size.width > webScreenSize
               ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
+                  horizontal: MediaQuery.of(context).size.width / 3,
+                )
               : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(
-                flex: 2,
-                child: Container(),
-              ),
+              Flexible(flex: 2, child: Container()),
               SvgPicture.asset(
                 'assets/ic_instagram.svg',
                 color: primaryColor,
                 height: 64,
               ),
-              const SizedBox(
-                height: 64,
-              ),
+              const SizedBox(height: 64),
               TextFieldInput(
                 hintText: 'Enter your email',
                 textInputType: TextInputType.emailAddress,
                 textEditingController: _emailController,
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               TextFieldInput(
                 hintText: 'Enter your password',
                 textInputType: TextInputType.text,
                 textEditingController: _passwordController,
                 isPass: true,
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: 24),
               InkWell(
                 onTap: loginUser,
                 child: Container(
@@ -116,29 +111,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     color: blueColor,
                   ),
                   child: !_isLoading
-                      ? const Text(
-                          'Log in',
-                        )
-                      : const CircularProgressIndicator(
-                          color: primaryColor,
-                        ),
+                      ? const Text('Log in')
+                      : const CircularProgressIndicator(color: primaryColor),
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
-              Flexible(
-                flex: 2,
-                child: Container(),
-              ),
+              const SizedBox(height: 12),
+              Flexible(flex: 2, child: Container()),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: const Text(
-                      'Dont have an account?',
-                    ),
+                    child: const Text('Dont have an account?'),
                   ),
                   GestureDetector(
                     onTap: () => Navigator.of(context).push(
@@ -150,9 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: const Text(
                         ' Signup.',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
                   ),

@@ -52,6 +52,10 @@ dev_dependencies:
   flutter_svg:
   image_picker:
   uuid: ^4.5.1
+  provider:
+  flutter_staggered_grid_view: ^0.6.2
+  intl: ^0.18.1
+
  
 
 # For information on the generic Dart part of this file, see the
