@@ -1,0 +1,1 @@
+double webScreenWidth = 600;
